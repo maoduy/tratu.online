@@ -1,0 +1,13 @@
+com\mkyong\model\Word.class
+com\voca\dict\StarDictParser$1.class
+com\mkyong\model\Type.class
+com\voca\dict\StarDictParser.class
+com\voca\dict\WordPosition.class
+com\mkyong\services\VocaIndexing.class
+com\mkyong\model\AjaxResponseBody.class
+com\voca\dict\ByteArrayHelper.class
+com\mkyong\controller\SearchController.class
+com\mkyong\services\UserService.class
+com\mkyong\model\SearchCriteria.class
+com\mkyong\controller\IndexController.class
+com\mkyong\SpringBootWebApplication.class

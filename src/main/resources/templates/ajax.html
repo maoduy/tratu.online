@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Spring Boot ajax example</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<!-- <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<script type="text/javascript"
+	src="http://localhost:8080/webjars/jquery/2.2.4/jquery.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script>
+	$(function() {
+		var availableTags = [ "ActionScript", "AppleScript", "Asp", "BASIC",
+				"C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang",
+				"Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp",
+				"Perl", "PHP", "Python", "Ruby", "Scala", "Scheme" ];
+		$("#searchBox").autocomplete({
+			source : availableTags
+		});
+	});
+</script> -->
+
+<style type="text/css">
+a {
+	color: #002bb8;
+}
+
+.ui-helper-hidden-accessible { display:none; }
+</style>
+</head>
+<body>
+
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">tratu.online</a>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container" style="min-height: 500px">
+
+		<div class="starter-template">
+			<h1>Your dictionary</h1>
+
+			<audio id="audio"
+				src="https://dictionary.cambridge.org/media/english/uk_pron/u/ukl/uklou/ukloudn014.mp3">
+			</audio>
+
+			<form class="form-horizontal" id="search-form" th:object="${word}"
+				action="#" method="post">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="searchBox"
+							th:field="*{word}" style="float: left; width: 80%" />
+						<div class="dropdown" style="display: inline; margin-left: -20px">
+							<button class="btn btn-default dropdown-toggle" type="button"
+								id="langBtn" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="true" style="padding: 12px; border-left: none;">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu1"
+								style="margin-top: 15px;">
+								<li onclick="setDict('VI_EN')" id="VI_EN"><a href="#">Tiếng
+										Việt - English</a></li>
+								<li onclick="setDict('EN_VI')" id="EN_VI"><a href="#">English
+										- Tiếng Việt </a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<input type="hidden" id="dictType" th:field="*{type}" />
+						<button type="submit" id="bth-search"
+							class="btn btn-primary btn-lg">Search</button>
+					</div>
+				</div>
+				<div id="feedback">
+					<div th:utext="${word.meaning}"></div>
+				</div>
+			</form>
+
+		</div>
+
+	</div>
+
+	<div class="container">
+		<footer>
+			<p>
+				© <a href="tratu.online">tratu.online</a> 2017
+			</p>
+		</footer>
+	</div>
+
+
+
+	<script type="text/javascript" src="http://localhost:8080/js/main.js"></script>
+
+</body>
+</html>
