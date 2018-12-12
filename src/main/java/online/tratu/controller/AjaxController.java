@@ -5,7 +5,9 @@ import online.tratu.model.SearchCriteria;
 import online.tratu.model.Type;
 import online.tratu.model.Word;
 import online.tratu.services.SolrService;
-import online.tratu.services.UserService;
+import online.tratu.view.Paragraph;
+import online.tratu.services.CambridgeService;
+import online.tratu.services.LookupHistoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,10 +32,13 @@ import java.util.stream.Collectors;
 @RestController
 public class AjaxController {
 
-	UserService userService;
+	CambridgeService userService;
 
 	@Autowired
-	public void setUserService(UserService userService) {
+	private LookupHistoryService lookupHistoryService;
+
+	@Autowired
+	public void setUserService(CambridgeService userService) {
 		this.userService = userService;
 	}
 
@@ -51,8 +56,7 @@ public class AjaxController {
 
 		}
 
-		List<Word> words = SolrService.getInstance().search(searchCriteria.getWord(),
-				searchCriteria.getType());
+		List<Word> words = SolrService.getInstance().search(searchCriteria.getWord(), searchCriteria.getType());
 		if (words.isEmpty()) {
 			result.setMsg("no user found!");
 		} else {
@@ -84,11 +88,10 @@ public class AjaxController {
 		return ResponseEntity.ok(result);
 
 	}
-	
-	@GetMapping("api/autocomplete")
-	public ResponseEntity<String> doAutoComplete(@RequestParam("word") final String input) {
-		List<Word> strings = SolrService.getInstance().search(input,
-				Type.EN_VI);
+
+	@PostMapping("api/autocomplete")
+	public ResponseEntity<String> doAutoComplete(@Valid @RequestBody SearchCriteria searchCriteria) {
+		List<Word> strings = SolrService.getInstance().search(searchCriteria.getWord(), searchCriteria.getType());
 		ObjectMapper mapper = new ObjectMapper();
 		String resp = "";
 		try {
@@ -96,6 +99,73 @@ public class AjaxController {
 		} catch (JsonProcessingException e) {
 		}
 		return new ResponseEntity<String>(resp, HttpStatus.OK);
+	}
+
+	@PostMapping("/api/history")
+	public ResponseEntity<?> history(@Valid @RequestBody SearchCriteria search, Errors errors) {
+
+		AjaxResponseBody result = new AjaxResponseBody();
+
+		// If error, just return a 400 bad request, along with the error message
+		if (errors.hasErrors()) {
+
+			result.setMsg(
+					errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(",")));
+			return ResponseEntity.badRequest().body(result);
+
+		}
+
+		boolean createResult = lookupHistoryService.createLookupHistory(search.getWord(), search.getType());
+		
+		if (createResult) {
+			result.setHistoryWords(lookupHistoryService.findAll());
+		}
+
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("/api/delete_history")
+	public ResponseEntity<?> deleteHistory(@Valid @RequestBody SearchCriteria search, Errors errors) {
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		// If error, just return a 400 bad request, along with the error message
+		if (errors.hasErrors()) {
+			
+			result.setMsg(
+					errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(",")));
+			return ResponseEntity.badRequest().body(result);
+			
+		}
+		
+		boolean createResult = lookupHistoryService.deleteLookupHistory(search.getWord(), search.getType());
+		
+		if (createResult) {
+			result.setHistoryWords(lookupHistoryService.findAll());
+		}
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("/api/check-paragraph")
+	public ResponseEntity<?> checkParagraph(@Valid @RequestBody Paragraph paragraph, Errors errors) {
+		
+		String[] words = paragraph.getParagraph().split(" ");
+		System.out.println(words);
+		
+		Paragraph result = new Paragraph();
+		result.setWords(SolrService.getInstance().matchingSearch(Arrays.asList(words), Type.EN_VI));
+		
+		// If error, just return a 400 bad request, along with the error message
+		if (errors.hasErrors()) {
+			
+			result.setMsg(
+					errors.getAllErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.joining(",")));
+			return ResponseEntity.badRequest().body(result);
+			
+		}
+		
+		return ResponseEntity.ok(result);
 	}
 
 }

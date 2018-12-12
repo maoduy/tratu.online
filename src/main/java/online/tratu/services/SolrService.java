@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
@@ -96,12 +98,57 @@ public class SolrService {
 
 		return Collections.emptyList();
 	}
+	
+	public List<Word> matchingSearch(List<String> searchKeys, Type dictType) {
+		SolrQuery query = createMatchingSearchQuery(searchKeys);
+		QueryResponse response = null;
+		
+		try {
+			System.out.println(query.toQueryString());
+			System.out.println(query.toString());
+			if (Type.EN_VI == dictType) {
+				response = enviClient.query(query);
+			} else if (Type.VI_EN == dictType) {
+				response = vienClient.query(query);
+			}
+			System.out.println("status : " + response.getStatus());
+			System.out.println("QTime : " + response.getQTime());
+			System.out.println("numFound : " + response.getResults().getNumFound());
+			SolrDocumentList list = response.getResults();
+			if (!list.isEmpty()) {
+				List<Word> words = new ArrayList<>();
+				for (SolrDocument doc : list) {
+					System.out.println("------------" + doc.getFieldValue("word"));
+					System.out.println("++++++++++++: " + doc.getFieldValue("meaning"));
+					Word word = new Word();
+					words.add(word);
+					word.setWord(((List<String>) doc.getFieldValue("word")).get(0));
+					word.setMeaning(((List<String>) doc.getFieldValue("formatedMeaning")).get(0));
+				}
+				return words;
+			}
+		} catch (SolrServerException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return Collections.emptyList();
+	}
 
 	private static SolrQuery createSolrQuery(String keyword) {
 		SolrQuery query = new SolrQuery("word:" + keyword);
 		query.setFields("id", "word", "formatedMeaning");
 		query.setRows(10);
 
+		return query;
+	}
+	
+	private static SolrQuery createMatchingSearchQuery(List<String> keywords) {
+		
+		String params = StringUtils.join(keywords, " ");
+		SolrQuery query = new SolrQuery("word_st:(" + params + ")");
+		query.setFields("id", "word", "formatedMeaning");
+		query.setRows(keywords.size());
+		
 		return query;
 	}
 }

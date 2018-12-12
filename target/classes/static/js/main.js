@@ -12,19 +12,46 @@ $(document).ready(function() {
 
 	// Hide language button
 	$("#" + $("#dictType").val()).hide();
+	
+	// Paragraph change event
+	$("#paragraphTextArea").bind('input propertychange', function() {
+	     console.log(this.value);
+	     checkParagraph();
+	});
 
 });
 
 $(function() {
+	/*$.ui.autocomplete.prototype._renderMenu = function(ul, items) {
+		  var self = this;
+		  //table definitions
+		  ul.append("<table><thead><tr><th>ID#</th><th>Name</th><th>Cool&nbsp;Points</th></tr></thead><tbody></tbody></table>");
+		  $.each( items, function( index, item ) {
+		    self._renderItemData(ul, ul.find("table tbody"), item );
+		  });
+		};
+		$.ui.autocomplete.prototype._renderItemData = function(ul,table, item) {
+			  return this._renderItem( table, item ).data( "ui-autocomplete-item", item );
+			};
+			$.ui.autocomplete.prototype._renderItem = function(table, item) {
+			  return $( "<tr class='ui-menu-item' role='presentation'></tr>" )
+			    .data( "item.autocomplete", item )
+			    .append( "<td >"+item.id+"</td>"+"<td>"+item.value+"</td>"+"<td>"+item.cp+"</td>" )
+			    .appendTo( table );
+			};*/
+	
 	$("#searchBox").autocomplete({
 		source : function(request, response) {
 			$("#feedback").html("");
+			var search = {}
+			search["word"] = request.term;
+			search["type"] = $("#dictType").val();
 			$.ajax({
+				type : "POST",
+				contentType : "application/json",
 				url : "http://localhost:8080/api/autocomplete",
 				dataType : "json",
-				data : {
-					word : request.term
-				},
+				data : JSON.stringify(search),
 				success : function(data) {
 					response($.map(data, function(item) {
 						return {
@@ -38,10 +65,17 @@ $(function() {
 		},
 		minLength : 2,
 		select : function(event, ui) {
+			 event.preventDefault();
 			$("#searchBox").val(ui.item.label);
 			$("#feedback").html(ui.item.value);
-			return false;
+			addHistory(ui.item.label);
+			//return false;
 		}, 
+	    focus: function(event, ui) {
+	        event.preventDefault();
+	        $("#searchBox").val(ui.item.label);
+	        window.history.pushState("object or string", "Title", ui.item.label);
+	    },
 		messages: {
 	        noResults: '',
 	        results: function() {}
@@ -49,22 +83,25 @@ $(function() {
 	});
 });
 
-function startAutoComplete() {
-	var search = {}
-	search["word"] = $("#searchBox").val();
+var hulla = new hullabaloo();
 
-	$("#speaker").prop("disabled", true);
-
+function deleteHistory(word, type, rowId) {
+	var data = {}
+	data["word"] = word;
+	data["type"] = type;
+	
 	$.ajax({
 		type : "POST",
 		contentType : "application/json",
-		url : "/api/search",
-		data : JSON.stringify(search),
+		url : "/api/delete_history",
+		data : JSON.stringify(data),
 		dataType : 'json',
 		cache : false,
 		timeout : 600000,
 		success : function(data) {
-			console.log("SUCCESS : ", data);
+			$("#" + rowId).remove(); // Remove current row
+			//$("#deleteMsg").show().delay(5000).fadeOut();
+			hulla.send("Delete word successful!", "success");
 		},
 		error : function(e) {
 
@@ -77,7 +114,37 @@ function startAutoComplete() {
 
 		}
 	});
+
 }
+
+function addHistory(word) {
+	var search = {}
+	search["word"] = word;
+	search["type"] = 'EN_VI';
+	
+	$.ajax({
+		type : "POST",
+		contentType : "application/json",
+		url : "/api/history",
+		data : JSON.stringify(search),
+		dataType : 'json',
+		cache : false,
+		timeout : 600000,
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(e) {
+			var json = "<h4>Ajax Response</h4><pre>" + e.responseText
+					+ "</pre>";
+			$('#feedback').html(json);
+
+			console.log("ERROR : ", e);
+			$("#btn-search").prop("disabled", false);
+
+		}
+	});
+}
+
 
 var isGetMp3Link = false;
 var currentWord = "";
@@ -102,6 +169,7 @@ function setDict(dictType) {
 function getMp3LinkAndPlay() {
 	var search = {}
 	search["word"] = $("#speaker").attr('word');
+	search["type"] = $("#dictType").val();
 
 	// Only request Ajax in case mp3 link wasn't get before
 	if (!isGetMp3Link || currentWord != search["word"]) {
@@ -186,3 +254,42 @@ function fire_ajax_submit() {
 	});
 
 }
+
+function checkParagraph() {
+
+	if ($("#paragraphTextArea").val().length == 0) {
+		return;
+	}
+
+	var search = {}
+	search["paragraph"] = $("#paragraphTextArea").val();
+
+	$.ajax({
+		type : "POST",
+		contentType : "application/json",
+		url : "/api/check-paragraph",
+		data : JSON.stringify(search),
+		dataType : 'json',
+		cache : false,
+		timeout : 600000,
+		success : function(data) {
+			console.log("SUCCESS : ", data);
+			if (data.result.length > 0) {
+				$('#newWords').html(data.result[0]);
+			} else {
+				$('#newWords').html("Can't find any result");
+			}
+
+		},
+		error : function(e) {
+
+			var json = "<h4>Ajax Response</h4><pre>" + e.responseText
+					+ "</pre>";
+			$('#newWords').html(json);
+
+			console.log("ERROR : ", e);
+		}
+	});
+
+}
+

@@ -8,7 +8,7 @@ import java.net.URLConnection;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class CambridgeService {
 
 	public String getMp3Link(String word) {
 		try {

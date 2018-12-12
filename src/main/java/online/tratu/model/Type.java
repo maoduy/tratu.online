@@ -4,6 +4,9 @@ public enum Type {
 	EN_VI("english-vietnamese"), VI_EN("vietnamese-english"), TECHNOLOGY(null), MATH(null), CHEMISTRY(null), CONSTRUCTION(null), ECONOMIC(null), TRASMISION(null);
 	
 	private String uri;
+	Type() {
+		this.uri = null;
+	}
 	Type(String uri) {
 		this.uri = uri;
 	}
@@ -16,5 +19,9 @@ public enum Type {
 		}
 		
 		return null;
+	}
+	
+	public String getURI() {
+		return uri;
 	}
 }

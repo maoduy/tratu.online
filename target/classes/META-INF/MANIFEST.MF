@@ -4,8 +4,7 @@ Build-Jdk: 10.0.2
 Implementation-Title: tratu.online
 Implementation-Version: 1.0
 Implementation-Vendor-Id: com.maonguyen
-Implementation-Vendor: Pivotal Software, Inc.
-Implementation-URL: http://projects.spring.io/spring-boot/tratu.online
- /
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/tratu.online
 Created-By: Maven Integration for Eclipse
 

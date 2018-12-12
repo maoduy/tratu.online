@@ -1,56 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-<title>Spring Boot ajax example</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
-	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
-	crossorigin="anonymous" />
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-<!-- <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-<script type="text/javascript"
-	src="http://localhost:8080/webjars/jquery/2.2.4/jquery.min.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- <script>
-	$(function() {
-		var availableTags = [ "ActionScript", "AppleScript", "Asp", "BASIC",
-				"C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang",
-				"Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp",
-				"Perl", "PHP", "Python", "Ruby", "Scala", "Scheme" ];
-		$("#searchBox").autocomplete({
-			source : availableTags
-		});
-	});
-</script> -->
-
-<style type="text/css">
-a {
-	color: #002bb8;
-}
-
-.ui-helper-hidden-accessible { display:none; }
-</style>
+<head th:replace="basic-template :: head">
 </head>
 <body>
-
-	<nav class="navbar navbar-inverse">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">tratu.online</a>
-			</div>
-		</div>
-	</nav>
-
+	<nav th:replace="basic-template :: navbar"></nav>
+	
 	<div class="container" style="min-height: 500px">
 
 		<div class="starter-template">
@@ -74,10 +28,10 @@ a {
 							</button>
 							<ul class="dropdown-menu" aria-labelledby="dropdownMenu1"
 								style="margin-top: 15px;">
-								<li onclick="setDict('VI_EN')" id="VI_EN"><a href="#">Tiếng
-										Việt - English</a></li>
-								<li onclick="setDict('EN_VI')" id="EN_VI"><a href="#">English
-										- Tiếng Việt </a></li>
+								<li onclick="setDict('VI_EN')" id="VI_EN"><a href="#"
+									th:text="#{vi2en}"></a></li>
+								<li onclick="setDict('EN_VI')" id="EN_VI"><a href="#"
+									th:text="#{en2vi}"></a></li>
 							</ul>
 						</div>
 					</div>
@@ -90,6 +44,29 @@ a {
 				<div id="feedback">
 					<div th:utext="${word.meaning}"></div>
 				</div>
+
+				<div th:if="${historyWords != null && userName != null}"
+					id="historyDiv">
+					<table class="table table-hover" style="margin-top: 50px;">
+						<thead>
+							<tr>
+								<th>History words</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="word,iterator : ${historyWords}"
+								th:id="'row' + ${iterator.count}">
+								<td><a href="${word.word}"
+									th:href="'/' + ${word.type.URI} + '/' + ${word.word}"><span
+										th:text="${word.word}"></span></a></td>
+								<td><a href="#"
+									th:onclick="'javascript:deleteHistory(\'' + ${word.word} + '\', \'' + ${word.type} + '\',  \'row' + ${iterator.count} + '\');'"><i
+										class="fa fa-trash" aria-hidden="true"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
 			</form>
 
 		</div>
@@ -99,7 +76,7 @@ a {
 	<div class="container">
 		<footer>
 			<p>
-				© <a href="tratu.online">tratu.online</a> 2017
+				� <a href="tratu.online">tratu.online</a> 2017
 			</p>
 		</footer>
 	</div>

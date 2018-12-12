@@ -7,6 +7,7 @@ public class AjaxResponseBody {
     String msg;
     List<Word> result;
     String mp3Link;
+    List<LookupHistory> historyWords;
 
     public String getMsg() {
         return msg;
@@ -30,6 +31,14 @@ public class AjaxResponseBody {
 
 	public void setMp3Link(String mp3Link) {
 		this.mp3Link = mp3Link;
+	}
+
+	public List<LookupHistory> getHistoryWords() {
+		return historyWords;
+	}
+
+	public void setHistoryWords(List<LookupHistory> historyWords) {
+		this.historyWords = historyWords;
 	}
 
 }

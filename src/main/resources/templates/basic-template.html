@@ -1,0 +1,68 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<title>Spring Boot ajax example</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<!-- <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<script type="text/javascript"
+	src="http://localhost:8080/webjars/jquery/2.2.4/jquery.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/hullabaloo.js}"></script>
+
+
+<style type="text/css">
+a {
+	color: #002bb8;
+}
+
+.ui-helper-hidden-accessible {
+	display: none;
+	color: red;
+}
+</style>
+</head>
+<body>
+
+	<nav th:fragment="navbar" class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">tratu.online</a>
+			</div>
+			<div th:if="${userName != null}">
+				<div th:utext="${userName}" style="float: right; color: white"></div>
+			</div>
+			<div th:if="${userName == null}" id="historyDiv"
+				style="float: right; color: white">
+				<a href="/login">Login</a>
+			</div>
+		</div>
+	</nav>
+	
+	<div th:fragment="copy">&copy; 2011 The Good Thymes Virtual
+		Grocery</div>
+
+</body>
+
+</html>
