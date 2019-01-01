@@ -6,37 +6,29 @@
 	<nav th:replace="basic-template :: navbar"></nav>
 
 	<div class="container" style="min-height: 500px">
-
 		<div class="starter-template">
+			<audio id="audio" 
+				src="http://google.com">
+			</audio>
 			<form class="form-horizontal" id="search-form" th:object="${model}"
 				action="#" method="post">
 				<div class="form-group form-group-lg">
-					<div class="col-sm-10">
-						<textarea rows="20" cols="100" class="form-control" id="paragraphTextArea"
-							th:field="*{paragraph}"></textarea>
-					</div>
+					<textarea rows="20" cols="100" class="form-control"
+						id="paragraphTextArea" th:field="*{paragraph}"></textarea>
 				</div>
-				
+
 				<div class="form-group form-group-lg" id="newWords">
-					<table class="table table-hover" style="margin-top: 50px;">
+					<table class="table table-hover" style="margin-top: 50px;"
+						id="newWordTable">
 						<thead>
 							<tr>
 								<th>New words</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr th:each="word,iterator : ${words}"
-								th:id="'row' + ${iterator.count}">
-								<td><a href="${word.word}"
-									th:href="'/' + ${word.type.URI} + '/' + ${word.word}"><span
-										th:text="${word.word}"></span></a></td>
-								<td><a href="#"
-									th:onclick="'javascript:deleteHistory(\'' + ${word.word} + '\', \'' + ${word.type} + '\',  \'row' + ${iterator.count} + '\');'"><i
-										class="fa fa-trash" aria-hidden="true"></i></a></td>
-							</tr>
-						</tbody>
 					</table>
 				</div>
+
+				<div class="form-group form-group-lg" id="unknownWords"></div>
 
 			</form>
 

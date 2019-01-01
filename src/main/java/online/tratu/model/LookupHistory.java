@@ -32,6 +32,8 @@ public class LookupHistory implements Serializable {
 	
 	@ManyToOne
 	private User user;
+	
+	private int point;
 
 	public String getWord() {
 		return word;
@@ -63,6 +65,14 @@ public class LookupHistory implements Serializable {
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
 	}
 
 }

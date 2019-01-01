@@ -234,6 +234,11 @@ public class StarDictParser {
 
 		return definitions;
 	}
+	
+	
+	public static void main(String[] args) {
+		System.out.println(search("look"));
+	}
 
 	public static boolean isWordExisting(String word) {
 		boolean isExisting = false;

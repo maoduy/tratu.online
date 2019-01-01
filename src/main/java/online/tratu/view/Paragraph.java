@@ -8,8 +8,10 @@ import online.tratu.model.Word;
 public class Paragraph {
 	private String paragraph;
 	private List<Word> words;
+	private List<String> unknownWords;
 	private Type type;
 	private String msg;
+	private boolean isLoggedIn;
 
 	public String getParagraph() {
 		return paragraph;
@@ -41,6 +43,22 @@ public class Paragraph {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	public List<String> getUnknownWords() {
+		return unknownWords;
+	}
+
+	public void setUnknownWords(List<String> unknownWords) {
+		this.unknownWords = unknownWords;
+	}
+
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
 	}
 
 }

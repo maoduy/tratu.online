@@ -75,9 +75,9 @@ public class TratuController {
 	}
 
 	@GetMapping("/*-*/{word}")
-	public ModelAndView view(@PathVariable("word") String word, HttpServletRequest request) {
+	public ModelAndView view(@PathVariable("word") String word, HttpServletRequest request) throws Exception {
 		Type type = Type.getType(request.getRequestURI());
-		List<Word> words = SolrService.getInstance().search(word, type);
+		List<Word> words = SolrService.getInstance().search(word, type, true);
 
 		lookupHistoryService.createLookupHistory(word, type);
 
