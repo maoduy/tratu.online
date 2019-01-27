@@ -2,6 +2,7 @@ C:\Workspace\tratu.online\src\main\java\online\tratu\login\controller\LoginContr
 C:\Workspace\tratu.online\src\main\java\online\tratu\model\LookupHistory.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\model\SearchCriteria.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\login\configuration\WebMvcConfig.java
+C:\Workspace\tratu.online\src\main\java\online\tratu\utils\OpenNLPUtils.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\dict\StarDictParser.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\login\LoginApplication.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\model\AjaxResponseBody.java
@@ -14,12 +15,16 @@ C:\Workspace\tratu.online\src\main\java\online\tratu\login\model\Role.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\controller\TratuController.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\login\model\User.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\dict\ByteArrayHelper.java
+C:\Workspace\tratu.online\src\main\java\online\tratu\controller\AppErrorController.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\login\service\UserService.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\login\repository\LookupHistoryRepository.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\login\configuration\SecurityConfiguration.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\login\repository\UserRepository.java
+C:\Workspace\tratu.online\src\main\java\online\tratu\model\Test.java
+C:\Workspace\tratu.online\src\main\java\online\tratu\services\SecurityService.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\services\LookupHistoryService.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\services\SolrService.java
+C:\Workspace\tratu.online\src\main\java\online\tratu\controller\TestController.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\services\CambridgeService.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\SpringBootWebApplication.java
 C:\Workspace\tratu.online\src\main\java\online\tratu\view\Paragraph.java

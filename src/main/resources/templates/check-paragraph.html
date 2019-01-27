@@ -5,36 +5,36 @@
 <body>
 	<nav th:replace="basic-template :: navbar"></nav>
 
-	<div class="container" style="min-height: 500px">
-		<div class="starter-template">
-			<audio id="audio" 
-				src="http://google.com">
-			</audio>
-			<form class="form-horizontal" id="search-form" th:object="${model}"
-				action="#" method="post">
-				<div class="form-group form-group-lg">
-					<textarea rows="20" cols="100" class="form-control"
+	<div class="container-fluid" style="min-height: 500px">
+		<audio id="audio" src="http://google.com">
+		</audio>
+		<form class="form-horizontal" id="search-form" th:object="${model}"
+			action="#" method="post">
+			<div class="row">
+				<div class="col-sm-6">
+					<textarea rows="20" cols="100" class="form-control" style="height: 500px"
 						id="paragraphTextArea" th:field="*{paragraph}"></textarea>
 				</div>
 
-				<div class="form-group form-group-lg" id="newWords">
-					<table class="table table-hover" style="margin-top: 50px;"
+
+				<div id="rightColumn" class="col-sm-6" style="overflow-y: scroll; height: 500px">
+					<table class="table table-hover"
 						id="newWordTable">
 						<thead>
-							<tr>
+							<!-- <tr>
 								<th>New words</th>
-							</tr>
+							</tr> -->
 						</thead>
 					</table>
 				</div>
+			</div>
 
-				<div class="form-group form-group-lg" id="unknownWords"></div>
+			<div class="form-group form-group-lg" id="unknownWords"></div>
 
-			</form>
-
-		</div>
+		</form>
 
 	</div>
+
 
 	<div class="container">
 		<footer>

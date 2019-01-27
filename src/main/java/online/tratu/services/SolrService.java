@@ -111,8 +111,9 @@ public class SolrService {
 
 		return words2;
 	}
-	
-	public List<Word> searchMatchingWords(List<String> searchKeys, Type dictType, Map<String, Set<String>> lemmaWordMap) {
+
+	public List<Word> searchMatchingWords(List<String> searchKeys, Type dictType,
+			Map<String, Set<String>> lemmaWordMap) {
 		SolrQuery query = createMatchingSearchQuery(searchKeys);
 		List<Word> words = searchWithQuery(searchKeys, dictType, query, lemmaWordMap);
 		return words;
@@ -174,17 +175,20 @@ public class SolrService {
 					System.out.println("------------" + doc.getFieldValue("word"));
 					System.out.println("++++++++++++: " + doc.getFieldValue("meaning"));
 					String wordStr = ((List<String>) doc.getFieldValue("word")).get(0);
-					if (lemmaWordMap == null || lemmaWordMap.get(wordStr) != null) {
+					if (lemmaWordMap != null && lemmaWordMap.get(wordStr) != null) {
 						Word word = new Word();
 						words.add(word);
-						if (lemmaWordMap != null) {
-							word.setWord(lemmaWordMap.get(wordStr).toString());
-							lemmaWordMap.remove(wordStr);
-						} else {
-							word.setWord(wordStr);
-						}
+						word.setRelatedWords(new ArrayList<>(lemmaWordMap.get(wordStr)));
+						System.out.println(lemmaWordMap.get(wordStr));
+						lemmaWordMap.remove(wordStr);
+						word.setWord(wordStr);
 						word.setMeaning(((List<String>) doc.getFieldValue("formatedMeaning")).get(0));
-					}
+					} else if (lemmaWordMap == null) {
+						Word word = new Word();
+						words.add(word);
+						word.setWord(wordStr);
+						word.setMeaning(((List<String>) doc.getFieldValue("formatedMeaning")).get(0));
+					} 
 				}
 				return words;
 			}

@@ -19,5 +19,12 @@ public class SecurityService {
 
 		return user != null;
 	}
+	
+	public User getLoggedInUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		
+		return user;
+	}
 
 }

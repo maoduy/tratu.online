@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="basic-template :: head">
+</head>
+<body>
+	<nav th:replace="basic-template :: navbar"></nav>
+
+	<div class="container-fluid" style="min-height: 500px">
+		<audio id="audio" src="http://google.com"></audio>
+		<form class="form-horizontal" id="form" th:action="@{/test}" th:object="${test}" action="#"
+			method="post">
+			<div class="row">
+				<div class="col-sm-12">
+					<div th:utext="${test.sentence}"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<input type="button" value="I don't know"
+						onclick="dontKnowWordSubmit()" id="dontKnow">
+					<input type="button" value="Next" style="display:none" id="nextButton" onclick="reload()"> <input type="hidden"
+						id="word" th:field="*{word}"/>
+					<input type="submit" value="I know" id="iKnow">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="meaning"></div>
+				</div>
+			</div>
+		</form>
+
+	</div>
+
+
+	<div class="container">
+		<footer>
+			<p>
+				© <a href="tratu.online">tratu.online</a> 2017
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="http://localhost:8080/js/main.js"></script>
+
+</body>
+</html>

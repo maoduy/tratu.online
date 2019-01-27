@@ -79,7 +79,7 @@ public class TratuController {
 		Type type = Type.getType(request.getRequestURI());
 		List<Word> words = SolrService.getInstance().search(word, type, true);
 
-		lookupHistoryService.createLookupHistory(word, type);
+		lookupHistoryService.createLookupHistory(word.toLowerCase(), type, null);
 
 		Word w = null;
 		if (words.isEmpty()) {

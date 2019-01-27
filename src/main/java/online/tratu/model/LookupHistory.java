@@ -34,6 +34,8 @@ public class LookupHistory implements Serializable {
 	private User user;
 	
 	private int point;
+	
+	private String sentence;
 
 	public String getWord() {
 		return word;
@@ -73,6 +75,14 @@ public class LookupHistory implements Serializable {
 
 	public void setPoint(int point) {
 		this.point = point;
+	}
+
+	public String getSentence() {
+		return sentence;
+	}
+
+	public void setSentence(String sentence) {
+		this.sentence = sentence;
 	}
 
 }

@@ -1,6 +1,7 @@
 package online.tratu.view;
 
 import java.util.List;
+import java.util.Set;
 
 import online.tratu.model.Type;
 import online.tratu.model.Word;
@@ -8,7 +9,7 @@ import online.tratu.model.Word;
 public class Paragraph {
 	private String paragraph;
 	private List<Word> words;
-	private List<String> unknownWords;
+	private Set<String> unknownWords;
 	private Type type;
 	private String msg;
 	private boolean isLoggedIn;
@@ -45,11 +46,11 @@ public class Paragraph {
 		this.msg = msg;
 	}
 
-	public List<String> getUnknownWords() {
+	public Set<String> getUnknownWords() {
 		return unknownWords;
 	}
 
-	public void setUnknownWords(List<String> unknownWords) {
+	public void setUnknownWords(Set<String> unknownWords) {
 		this.unknownWords = unknownWords;
 	}
 

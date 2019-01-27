@@ -1,10 +1,17 @@
 package online.tratu.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.solr.client.solrj.beans.Field;
 
 public class Word {
 	@Field
 	private String word;
+	
+	private List<String> relatedWords;
+	
+	private List<String> sentences = new ArrayList<>();
 	
 	@Field
 	private String meaning;
@@ -27,6 +34,22 @@ public class Word {
 		this.type = type;
 		this.meaning = meaning;
 		this.word = word;
+	}
+
+	public List<String> getSentences() {
+		return sentences;
+	}
+
+	public void setSentences(List<String> sentences) {
+		this.sentences = sentences;
+	}
+
+	public List<String> getRelatedWords() {
+		return relatedWords;
+	}
+
+	public void setRelatedWords(List<String> relatedWords) {
+		this.relatedWords = relatedWords;
 	}
 
 	public String getMeaning() {

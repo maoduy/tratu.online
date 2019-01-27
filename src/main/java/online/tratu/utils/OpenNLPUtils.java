@@ -3,9 +3,7 @@ package online.tratu.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import opennlp.tools.lemmatizer.DictionaryLemmatizer;
@@ -40,6 +38,7 @@ public class OpenNLPUtils {
 		String[] lemmas = lemmatizer.lemmatize(inputTokens, tags);
 
 		Set<String> lemmasSet = new HashSet<>(Arrays.asList(lemmas));
+		lemmasSet.removeIf(item -> item.length() == 1);
 		if (lemmasSet.contains("O")) {
 			lemmasSet.remove("O");
 		}
