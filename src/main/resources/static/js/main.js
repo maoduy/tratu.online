@@ -115,7 +115,7 @@ $(function() {
 					event.preventDefault();
 					$("#searchBox").val(ui.item.label);
 					$("#feedback").html(ui.item.value);
-					addHistory(ui.item.label);
+					//addHistory(ui.item.label);
 					// return false;
 				},
 				focus : function(event, ui) {

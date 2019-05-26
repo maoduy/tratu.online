@@ -47,7 +47,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 //.antMatchers("/**").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/english-vietnamese/").permitAll()
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/english-vietnamese/**").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/admin/**", "/test").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
@@ -65,7 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**");
     }
 
 }
